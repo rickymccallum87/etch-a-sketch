@@ -8,3 +8,7 @@
 .clear {
     clear: left;
 }
+
+.color {
+    background-color: #222;
+}
