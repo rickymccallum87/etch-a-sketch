@@ -2,32 +2,39 @@ const container = document.querySelector('#container');
 const resetButton = document.querySelector('button');
 let sketchpad = [];
 let index = 0;
-let length;
+let tilesPerSide;
+let containerSize = 800; 
 
 createGrid();
 
+// New grid
+resetButton.addEventListener('click', () => {
+    clearGrid();
+    tilesPerSide = prompt('How many squares per side?');
+    createGrid(tilesPerSide);
+});
+
+// Destroy grid
 function clearGrid() {
     for (let i = 0; i < sketchpad.length; i++) {
         container.removeChild(sketchpad[i]);
     }
 }
 
-resetButton.addEventListener('click', () => {
-    clearGrid();
-    length = prompt('How many squares per side?');
-    createGrid(length);
-});
-
 // Create grid
-function createGrid(length = 16) {
-    for (let i = 0; i < length; i++) {
-        for (let j = 0; j < length; j++) {
-            index = i * length + j;
+function createGrid(tilesPerSide = 16) {
+    for (let i = 0; i < tilesPerSide; i++) {
+        for (let j = 0; j < tilesPerSide; j++) {
+            index = i * tilesPerSide + j;
+
             sketchpad[index] = document.createElement('div');
             sketchpad[index].classList.add('tile');
+            sketchpad[index].style.width = containerSize / tilesPerSide + 'px';
+            sketchpad[index].style.height = containerSize / tilesPerSide + 'px';
+
             container.appendChild(sketchpad[index]);
 
-            if (index % 16 === 0) {
+            if (index % tilesPerSide === 0) {
                 sketchpad[index].classList.add('clear');
             }
         }
